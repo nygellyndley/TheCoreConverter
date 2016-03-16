@@ -1,13 +1,6 @@
 ============================
 Start wrong inherit (log file: WrongInheritance.log)
 ----------------------------
-[ERROR]: ArbiterMPRecall/ArbiterMP != MothershipCoreMassRecall/MothershipCore
-	P: D	4
-	T: 4	3
-	R: S,2	S,2
-	Z: Q	S
-	D: R	R (default)
-
 [ERROR]: ArchonHallucination/Nexus != ArchonHallucination/Sentry
 	P: B	D
 	T: Z	3
@@ -58,7 +51,7 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D: B	B (default)
 
 [ERROR]: BuildAutoTurret/Raven != AutoTurret/Raven
-	P: 4	4
+	P: 4	4,X
 	T: D,Z	D,T
 	R: F,6	F,6
 	Z: S	S
@@ -66,10 +59,17 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: BuildCreepTumor/QueenCoop != BuildCreepTumor/Queen
 	P:  	4
-	T:  	D
+	T: D	D
 	R: A	A
-	Z:  	S
+	Z: S	S
 	D: C	C (default)
+
+[ERROR]: BuildPointDefenseDrone/Raven != PointDefenseDrone/Raven
+	P: D,V	D,B
+	T: 4,3	4,3
+	R: S,2	S,2
+	Z: Q,2	Q,2
+	D:  	D (default)
 
 [ERROR]: BuildScienceVessel/Starport != Raven/Starport
 	P: V	V
@@ -177,18 +177,11 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D: W	Q (default)
 
 [ERROR]: DarkPylonRecall/DarkPylon != MothershipCoreMassRecall/MothershipCore
-	P:  	4
-	T:  	3
+	P: 4	4
+	T: 3	3
 	R: S	S,2
-	Z:  	S
+	Z: S	S
 	D: R	R (default)
-
-[ERROR]: DarkTemplarShadowDash/DarkTemplarShakuras != Blink/Stalker
-	P:  	E
-	T:  	R
-	R: R	R
-	Z:  	G
-	D: B	B (default)
 
 [ERROR]: DisableBuildingAttackScourge/Scourge != DisableBuildingAttack/Baneling
 	P:  	4
@@ -198,29 +191,64 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D: G	G (default)
 
 [ERROR]: DisablingCloud/Viper != BlindingCloud/Viper
-	P: D,J	D,N
-	T: 4,6	4
+	P: D	D,N
+	T: 4	4
 	R: S	S
 	Z: Q,B	Q,B
 	D: B	B (default)
 
 [ERROR]: DutchPlaceTurret/Swann != AutoTurret/Raven
-	P: 4	4
+	P: 4	4,X
 	T: D,Z	D,T
 	R: F,6	F,6
 	Z: S	S
 	D: T	T (default)
 
+[ERROR]: Feedback/AnAleemController != Feedback/HighTemplar
+	P: D,V	D,B
+	T: 4,3	4,3
+	R: S,F	S,F
+	Z: Q,2	Q,2
+	D:  	F (default)
+
+[ERROR]: Feedback/Khiradun != Feedback/HighTemplar
+	P: D,V	D,B
+	T: 4,3	4,3
+	R: S,F	S,F
+	Z: Q,2	Q,2
+	D:  	F (default)
+
+[ERROR]: FenixWhirlwind/FenixChampion != VoidZealotWhirlwind/ZealotAiur
+	P: D	4
+	T: 4	4
+	R: S	S
+	Z: Q	Q
+	D: E	E (default)
+
+[ERROR]: FenixWhirlwind/FenixSOA != VoidZealotWhirlwind/ZealotAiur
+	P: D	4
+	T: 4	4
+	R: S	S
+	Z: Q	Q
+	D: E	E (default)
+
+[ERROR]: Frostbat/Barracks != Firebat/Barracks
+	P: B	B
+	T: J	C
+	R: C	C
+	Z: A	A
+	D:  	F (default)
+
 [ERROR]: FungalGrowth/Infestor2 != FungalGrowth/Infestor
 	P: E,J	E,J
 	T: R,6	R
 	R: R,Tab	R,Tab
-	Z: G,B	G,H
+	Z: G,B	G
 	D:  	F (default)
 
 [ERROR]: GreaterSpireBroodlord/Spire != GreaterSpire/Spire
 	P: B	4
-	T: Z	D
+	T: 4	D
 	R: S	S
 	Z: S	S
 	D: G	G (default)
@@ -247,14 +275,14 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D:  	E (default)
 
 [ERROR]: HeroNukeCalldown/Nova != NukeCalldown/Ghost
-	P: J	J
+	P: J	X
 	T: 6	6
 	R: A	A
-	Z: B	H
+	Z: H	H
 	D: N	N (default)
 
 [ERROR]: HeroNukeCalldown/Tosh != NukeCalldown/Ghost
-	P: J	J
+	P: J	X
 	T: 6	6
 	R: A	A
 	Z: B	H
@@ -275,45 +303,45 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D:  	T (default)
 
 [ERROR]: HydraliskFrenzy/Hydralisk != Blink/Stalker
-	P: P	E
-	T: P	R
+	P: E	E
+	T: R	R
 	R: R	R
-	Z: P	G
+	Z: 2	G
 	D: T	B (default)
 
 [ERROR]: HydraliskFrenzy/HydraliskImpaler != Blink/Stalker
 	P: P	E
-	T: P	R
+	T: R	R
 	R: R	R
-	Z: P	G
+	Z: 2	G
 	D: T	B (default)
 
 [ERROR]: HydraliskFrenzy/HydraliskLurker != Blink/Stalker
 	P: P	E
-	T: P	R
+	T: R	R
 	R: R	R
-	Z: P	G
+	Z: 2	G
 	D: T	B (default)
 
 [ERROR]: HyperionVoidCoopHyperjump/HyperionVoidCoop != Hyperjump/Battlecruiser
-	P:  	D
-	T:  	4
+	P: D	D
+	T: R	R
 	R: R	R
 	Z:  	2
 	D: Q	T (default)
 
 [ERROR]: HyperionVoidCoopYamatoCannon/HyperionVoidCoop != YamatoGun
-	P:  	E,4
-	T:  	R,D
+	P: E,4	E,4
+	T: 4,D	4,D
 	R: S,F	S,F
 	Z:  	S
 	D: Y	Y (default)
 
 [ERROR]: HyperjumpHercules/Hercules != Hyperjump/Battlecruiser
-	P:  	D
-	T:  	4
+	P: D	D
+	T: R	R
 	R: S	R
-	Z:  	2
+	Z: 2	2
 	D: T	T (default)
 
 [ERROR]: ImmortalHallucination/Nexus != ImmortalHallucination/Sentry
@@ -322,6 +350,13 @@ Start wrong inherit (log file: WrongInheritance.log)
 	R: S	S
 	Z: S	S
 	D:  	I (default)
+
+[ERROR]: Impaler/HydraliskImpaler != LurkerMP/Hydralisk
+	P: 4	4
+	T: 3	D
+	R: S	S
+	Z: S	G
+	D: E	E (default)
 
 [ERROR]: ImpalerBurrowUp != BurrowUp
 	P: 4	4
@@ -351,23 +386,51 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z:  	P
 	D: C	C (default)
 
-[ERROR]: MassRecall/Artanis != MothershipCoreMassRecall/MothershipCore
-	P: 4	4
-	T: D	3
-	R: S,2	S,2
+[ERROR]: LocustFlyingLaunch/SwarmHostSplitABurrowed != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
 	Z: S	S
-	D: R	R (default)
+	D: C	C (default)
 
-[ERROR]: MassRecall/Mothership != MothershipCoreMassRecall/MothershipCore
-	P: 4	4
-	T: D	3
-	R: S,2	S,2
+[ERROR]: LocustFlyingLaunch/SwarmHostSplitARooted != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
 	Z: S	S
-	D: R	R (default)
+	D: C	C (default)
+
+[ERROR]: LocustLaunch/SwarmHostBurrowed != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
+	Z: S	S
+	D: C	C (default)
+
+[ERROR]: LocustLaunch/SwarmHostRooted != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
+	Z: S	S
+	D: C	C (default)
+
+[ERROR]: LocustLaunchCreeper/SwarmHostSplitBBurrowed != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
+	Z: S	S
+	D: C	C (default)
+
+[ERROR]: LocustLaunchCreeper/SwarmHostSplitBRooted != SwarmHost/SwarmHostBurrowedMP
+	P: V	E
+	T: R	R
+	R: R	R
+	Z: S	S
+	D: C	C (default)
 
 [ERROR]: MedicHeal/Medic != Heal/Medivac
 	P: D	D
-	T: 6	6
+	T: 3	6
 	R: A	A
 	Z: Y	H
 	D: E	E (default)
@@ -377,6 +440,13 @@ Start wrong inherit (log file: WrongInheritance.log)
 	T: 6	6
 	R: A	A
 	Z: Y	H
+	D: E	E (default)
+
+[ERROR]: MissilePods/DukesRevenge != MissilePods/Battlecruiser
+	P: V	V
+	T: 4	R
+	R: R	R
+	Z: 2	2
 	D: E	E (default)
 
 [ERROR]: MorphMorphalisk/BroodMother != MorphMorphalisk/Queen
@@ -395,9 +465,9 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: MorphMorphalisk/QueenCoop != MorphMorphalisk/Queen
 	P:  	E,J
-	T:  	R,6
+	T: R,6	R,6
 	R: R,2	R,2
-	Z:  	2
+	Z: 2	2
 	D: V	V (default)
 
 [ERROR]: MorphToHotSNoxious/Larva != Ultralisk/Larva
@@ -456,16 +526,23 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z: G	G
 	D: E	E (default)
 
-[ERROR]: Mothership/Nexus != MothershipCore/Nexus
-	P: V	4
+[ERROR]: MothershipCoreWeapon/Mothership != MothershipCoreWeapon/MothershipCore
+	P: D,V	D
 	T: D	D
 	R: F	F
-	Z: S	S
-	D: M	M (default)
+	Z: 2	2
+	D: F	F (default)
+
+[ERROR]: NPSwarm/Infestor != NeuralParasite/Infestor
+	P: 4,B	4,B
+	T: T	3,6
+	R: S,A	S,A
+	Z: 2	2
+	D: E	E (default)
 
 [ERROR]: NanoRepair/ScienceVessel != Heal/Medivac
 	P: D	D
-	T: 6	6
+	T: 3	6
 	R: A	A
 	Z: Y	H
 	D: N	E (default)
@@ -477,15 +554,15 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z: 2	2
 	D:  	E (default)
 
-[ERROR]: Observer/RoboticsFacilityWarp != Observer/RoboticsFacility
-	P: G	G
-	T:  	E
-	R: R	R
-	Z: G	G
-	D: B	B (default)
+[ERROR]: NovaSnipe/Nova != Snipe/Ghost
+	P: V	V,B
+	T: D	D
+	R: 2,6	2,6
+	Z: S	S
+	D: R	R (default)
 
 [ERROR]: OdinNukeCalldown/Odin != NukeCalldown/Ghost
-	P: J	J
+	P: J	X
 	T: 6	6
 	R: A	A
 	Z: B	H
@@ -512,19 +589,12 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z: G,S	S
 	D:  	B (default)
 
-[ERROR]: PsionicLift/KerriganVoid != PsionicLift/K5Kerrigan
-	P: 4	4
-	T: D	D
-	R: R	R
-	Z:  	S
-	D: T	T,W (default)
-
-[ERROR]: PsionicLift/KerriganVoidBurrowed != PsionicLift/K5KerriganBurrowed
-	P: J	J
-	T: J	J
-	R: J	J
-	Z:  	J
-	D: T	T,W (default)
+[ERROR]: PsionicBolt/Telios != Feedback/HighTemplar
+	P: D,V	D,B
+	T: 4,3	4,3
+	R: S,F	S,F
+	Z: Q,2	Q,2
+	D:  	F (default)
 
 [ERROR]: QueenBurstHeal/Queen != Transfusion/Queen
 	P: V	V,B
@@ -535,9 +605,9 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: QueenCoop != Queen
 	P:  	V
-	T:  	F
-	R:  	Q
-	Z:  	B
+	T: F	F
+	R: Q	Q
+	Z: B	B
 	D: Q	Q (default)
 
 [ERROR]: ReaverScarabs/Reaver != Interceptor/Carrier
@@ -547,12 +617,12 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z: G	S
 	D: C	I (default)
 
-[ERROR]: ResearchBansheeCloak/StarportTechReactor != ResearchBansheeCloak/StarportTechLab
-	P: D	D
-	T: 4	3
-	R: F	F
-	Z: Q	Q
-	D: C	C (default)
+[ERROR]: ResearchFirebat/ScienceFacility != Firebat/Barracks
+	P: B	B
+	T: J	C
+	R: C	C
+	Z: A	A
+	D: F	F (default)
 
 [ERROR]: ResearchGoliath/ScienceFacility != HellionTank/Factory
 	P: V	B
@@ -577,62 +647,48 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: SJHyperionYamato/SJHyperion != YamatoGun
 	P: E,4	E,4
-	T: R,D	R,D
+	T: R,D	4,D
 	R: S,F	S,F
 	Z: G,S	S
 	D: E	Y (default)
 
-[ERROR]: SOAMothershipBlink/SOAMothershipv4 != Blink/Stalker
-	P: V	E
-	T: 3	R
-	R: R	R
-	Z: 2	G
-	D: B	B (default)
-
 [ERROR]: Salvage/KelMorianGrenadeTurret != Salvage/Bunker
 	P:  	H
-	T:  	5
+	T: 5	5
 	R: S	S
-	Z:  	S
+	Z: S	S
 	D: V	V (default)
 
 [ERROR]: Salvage/KelMorianMissileTurret != Salvage/Bunker
 	P:  	H
-	T:  	5
+	T: 5	5
 	R: S	S
-	Z:  	S
+	Z: S	S
 	D: V	V (default)
 
 [ERROR]: Salvage/MissileTurret != Salvage/Bunker
 	P:  	H
-	T:  	5
+	T: 5	5
 	R: S	S
-	Z:  	S
+	Z: S	S
 	D: V	V (default)
 
 [ERROR]: Salvage/PerditionTurret != Salvage/Bunker
 	P:  	H
-	T:  	5
+	T: 5	5
 	R: S	S
-	Z:  	S
+	Z: S	S
 	D: V	V (default)
 
 [ERROR]: Scourge/Larva != SwarmHostMP/Larva
 	P: X	Y
-	T: X	6
+	T: 7	6
 	R: T	T
 	Z: A	A
 	D: S	A (default)
 
-[ERROR]: ShadowGuardBlink/VorazunShadowGuard != Blink/Stalker
-	P:  	E
-	T:  	R
-	R: R	R
-	Z:  	G
-	D: B	B (default)
-
 [ERROR]: SpectreHoldFire/Spectre != GhostHoldFire/Ghost
-	P: N	N
+	P: N	Tab
 	T: X	X
 	R: Tab	Tab
 	Z: Tab	B
@@ -646,7 +702,7 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D: N	N (default)
 
 [ERROR]: SpectreNukeCalldown/Spectre != NukeCalldown/Ghost
-	P: J	J
+	P: J	X
 	T: 6	6
 	R: A	A
 	Z: B	H
@@ -738,20 +794,20 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: Transfusion/QueenCoop != Transfusion/Queen
 	P:  	V,B
-	T:  	3,Z
+	T: T,3	3,Z
 	R: S,C	S,C
-	Z:  	G,H
+	Z: G,H	G,H
 	D: T	T (default)
 
 [ERROR]: UpgradeToRoboticsFacilityWarp/RoboticsFacility != UpgradeToWarpGate/Gateway
-	P: B	B
+	P: H	H
 	T: T	T
 	R: C	S
 	Z: Y	V
 	D: G	G (default)
 
 [ERROR]: UpgradeToStargateWarp/Stargate != UpgradeToWarpGate/Gateway
-	P: B	B
+	P: H	H
 	T: T	T
 	R: C	S
 	Z: Y	V
@@ -766,9 +822,9 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: ViperConsumption/Viper != ViperConsume/Viper
 	P: 4	V
-	T: D,Z	3
+	T: 3	3
 	R: A	A
-	Z: S	H
+	Z: H	H
 	D: C	C (default)
 
 [ERROR]: VoidRayHallucination/Nexus != VoidRayHallucination/Sentry
@@ -786,7 +842,7 @@ Start wrong inherit (log file: WrongInheritance.log)
 	D:  	V (default)
 
 [ERROR]: VoidZealotShadowChargeStun/ZealotShakuras != Charge/Zealot
-	P: D	E
+	P: 4	E
 	T: 4	R
 	R: S	R
 	Z: Q	G
@@ -794,16 +850,16 @@ Start wrong inherit (log file: WrongInheritance.log)
 
 [ERROR]: Vortex/Artanis != TemporalField/MothershipCore
 	P: E	E
-	T: R	R
+	T: D	R
 	R: F	R
-	Z: G	G
+	Z: 2	G
 	D: V	T,C (default)
 
 [ERROR]: Vortex/Mothership != TemporalField/MothershipCore
 	P: E	E
-	T: R	R
+	T: D	R
 	R: F	R
-	Z: G	G
+	Z: 2	G
 	D: V	T,C (default)
 
 [ERROR]: WarpPrismHallucination/Nexus != WarpPrismHallucination/Sentry
@@ -824,7 +880,7 @@ Start wrong inherit (log file: WrongInheritance.log)
 	P:  	G
 	T:  	E
 	R: W	W
-	Z:  	W
+	Z: W	W
 	D: R	N (default)
 
 [ERROR]: ZealotHallucination/Nexus != ZealotHallucination/Sentry
@@ -841,13 +897,13 @@ Start wrong inherit (log file: WrongInheritance.log)
 	Z: Y	Tab
 	D:  	Z (default)
 
-[ERROR]: ZeratulStun/ZeratulVoid != ZeratulStun/Zeratul
-	P: 4	4
-	T:  	D
-	R: S	S
-	Z: S	S
-	D: V	V (default)
+[ERROR]: hydraliskspeed/LurkerDen != hydraliskspeed/LurkerDenMP
+	P: E	E
+	T: E	E
+	R: R	R
+	Z: W	G
+	D:  	G (default)
 
 ----------------------------
-Finished (wrong inherit) - ERRORs: 121 
+Finished (wrong inherit) - ERRORs: 129 
 ============================
