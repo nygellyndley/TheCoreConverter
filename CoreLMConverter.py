@@ -192,7 +192,7 @@ def create_filepath(race, side, size, path=""):
     return filepath
 
 def new_keys_from_seed_hotkeys():
-    logger = Logger("Search for new Keys in seed layouts", log_consol=[LogLevel.Info], log_file=[])
+    logger = Logger("Searching for new Keys in seed layouts", log_consol=[LogLevel.Info], log_file=[])
     for race in Races:
         for section in hotkeyfile_parsers[race].sections():
             for item in hotkeyfile_parsers[race].items(section):
@@ -237,30 +237,6 @@ def order(filepath):
     file = open(filepath, 'w')
     write_parser.write(file)
     file.close()
-
-# This seems to be checking for default hotkey bindings.
-# A SC2Hotkeys file only contains mappings for overridden keys,
-# so in order to remap the hotkeys to different locations,
-# there needs to be a default value specified.
-# For some reason there are 3 different files with 'default' values though
-def check_defaults():
-    logger = Logger("Check defaults", "Defaults.log", log_consol=[LogLevel.Error], log_file=[LogLevel.Warn, LogLevel.Error])
-    for section in default_parser.sections():
-        for item in default_parser.items(section):
-            key = item[0]
-            default = item[1]
-            if not default:
-                seedhas = True
-                for race in Races:
-                    if not hotkeyfile_parsers[race].has_option(section, key):
-                        seedhas = False
-                inherit = inherit_parser.has_option(section, key)
-
-                if seedhas or inherit:
-                    logger.log(LogLevel.Warn, "no default for " + key + ", but it was inferred from another race or a similar keymapping")
-                else:
-                    logger.log(LogLevel.Error, "no default for " + key + " and it could not be inferred")
-    logger.finish()
 
 def create_model():
     model = {}
@@ -595,7 +571,6 @@ print("  ________         ______              " + "\n"
 init_seed_hotkeyfile_parser()
 # check sections
 new_keys_from_seed_hotkeys()
-check_defaults()
 model = create_model()
 generate(model)
 analyse(model)
