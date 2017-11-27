@@ -1,6 +1,8 @@
 import configparser, os, shutil
 from enum import Enum
 
+source_dir = 'hotkey_sources/'
+
 class Conversion(Enum):
     LMtoRM = 'LeftToRightMaps'
     RMtoLM = 'LeftToRightMapsInverted'
@@ -86,31 +88,41 @@ def right_filename_from_left(left_name):
     elif 'left' in left_name:
         return left_name.replace('left', 'right')
 
+def left_filename_from_right(right_name):
+    if 'Right' in right_name:
+        return right_name.replace('Right', 'Left')
+    elif 'right' in right_name:
+        return right_name.replace('right', 'left')
 
-for f in ["build", "temp"]:
-    if not os.path.isdir(f): os.makedirs(f)
+def generate_right_profiles():
+    for f in ["build", "temp"]:
+        if not os.path.isdir(f): os.makedirs(f)
 
-# step one is to convert the left layout to the right layout
-for file_name in os.listdir('hotkey_sources'):
-    right_version = right_filename_from_left(file_name)
-    if right_version:
-        convert_hotkey_file(file_name, right_version, Conversion.LMtoRM)
+    for file_name in os.listdir(source_dir):
+        right_version = right_filename_from_left(file_name)
+        if right_version:
+            convert_hotkey_file(source_dir + file_name, source_dir + right_version, Conversion.LMtoRM)
+
+def unify_left_and_right_layouts():
+    for file_name in os.listdir(source_dir):
+        left_version = left_filename_from_right(file_name)
+        if left_version:
+            # this converts the right layout back to the left layout and merges it with the original left layout
+            convert_hotkey_file(source_dir + file_name, 'temp/' + left_version, Conversion.RMtoLM)
+            hotkeyfile = ConfigParser()
+            hotkeyfile.allow_no_value=True
+            hotkeyfile.read('temp/' + left_version)
+            hotkeyfile.read(source_dir + file_name) 
+            hotkeyfile.write(open('temp/merged.SC2Hotkeys', 'w'))
+
 
 # the right layouts should be tested in StarCraft and editied if need be
 # once the right layouts look good, run the conversion again to generate all the other layouts
-source_files = os.listdir('hotkey_sources')
-for file_name in source_files:
-    full_file_name = os.path.join('hotkey_sources/', file_name)
-    shutil.copy(full_file_name, 'build/')
 
+#source_files = os.listdir('hotkey_sources')
+#for file_name in source_files:
+#    full_file_name = os.path.join('hotkey_sources/', file_name)
+#    shutil.copy(full_file_name, 'build/')
 
-def unify_left_and_right_layouts():
-    # this converts the right layout back to the left layout and merges it with the original left layout
-    prefix = 'build/Core '
-    convert_hotkey_file(prefix + 'Right.SC2Hotkeys', 'temp/Core Left.SC2Hotkeys', Conversion.RMtoLM)
-    hotkeyfile = ConfigParser()
-    hotkeyfile.allow_no_value=True
-    hotkeyfile.read('temp/Core Left.SC2Hotkeys')
-    hotkeyfile.read(prefix + 'Left.SC2Hotkeys')
-    hotkeyfile.write(open('temp/merged.SC2Hotkeys', 'w'))
-
+generate_right_profiles()
+unify_left_and_right_layouts()
