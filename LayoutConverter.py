@@ -60,7 +60,6 @@ def convert_hotkey_values(keystring, conversion_type):
 
     return remapped
 
-# should be an option for update-only, not rewrite
 # probably should use the configparse file write operation, not a custom file output
 def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
     print("converting " + inputfilename + " to " + outputfilename)
@@ -81,30 +80,37 @@ def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
                 else:
                     outputfile.write(item[0] + "=" + item[1] + "\n")
 
-if not os.path.isdir("build"):
-    os.makedirs("build")
+def right_filename_from_left(left_name):
+    if 'Left' in left_name:
+        return left_name.replace('Left', 'Right')
+    elif 'left' in left_name:
+        return left_name.replace('left', 'right')
 
-if not os.path.isdir("temp"):
-    os.makedirs("temp")
+
+for f in ["build", "temp"]:
+    if not os.path.isdir(f): os.makedirs(f)
 
 # step one is to convert the left layout to the right layout
-prefix = 'hotkey_sources/Core '
-convert_hotkey_file(prefix + 'Left.SC2Hotkeys', prefix + 'Right.SC2Hotkeys', Conversion.LMtoRM)
+for file_name in os.listdir('hotkey_sources'):
+    right_version = right_filename_from_left(file_name)
+    if right_version:
+        convert_hotkey_file(file_name, right_version, Conversion.LMtoRM)
 
-# the right medium layouts should be tested in StarCraft and editied if need be
-# once the right medium layouts look good, run the conversion to generate all the other layouts
+# the right layouts should be tested in StarCraft and editied if need be
+# once the right layouts look good, run the conversion again to generate all the other layouts
 source_files = os.listdir('hotkey_sources')
 for file_name in source_files:
     full_file_name = os.path.join('hotkey_sources/', file_name)
     shutil.copy(full_file_name, 'build/')
 
-# this converts the right layout back to the left layout and merges it with the original left layout
-prefix = 'build/Core '
-convert_hotkey_file(prefix + 'Right.SC2Hotkeys', 'temp/Core Left.SC2Hotkeys', Conversion.RMtoLM)
-hotkeyfile = ConfigParser()
-hotkeyfile.allow_no_value=True
-hotkeyfile.read('temp/Core Left.SC2Hotkeys')
-hotkeyfile.read(prefix + 'Left.SC2Hotkeys')
-hotkeyfile.write(open('merged.SC2Hotkeys', 'w'))
 
+def unify_left_and_right_layouts():
+    # this converts the right layout back to the left layout and merges it with the original left layout
+    prefix = 'build/Core '
+    convert_hotkey_file(prefix + 'Right.SC2Hotkeys', 'temp/Core Left.SC2Hotkeys', Conversion.RMtoLM)
+    hotkeyfile = ConfigParser()
+    hotkeyfile.allow_no_value=True
+    hotkeyfile.read('temp/Core Left.SC2Hotkeys')
+    hotkeyfile.read(prefix + 'Left.SC2Hotkeys')
+    hotkeyfile.write(open('temp/merged.SC2Hotkeys', 'w'))
 
