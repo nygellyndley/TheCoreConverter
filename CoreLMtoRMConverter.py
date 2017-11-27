@@ -98,11 +98,13 @@ for file_name in source_files:
     full_file_name = os.path.join('hotkey_sources/', file_name)
     shutil.copy(full_file_name, 'build/')
 
-prefix = 'build/Core '
 # this converts the right layout back to the left layout and merges it with the original left layout
+prefix = 'build/Core '
 convert_hotkey_file(prefix + 'Right.SC2Hotkeys', 'temp/Core Left.SC2Hotkeys', Conversion.RMtoLM)
 hotkeyfile = ConfigParser()
 hotkeyfile.allow_no_value=True
 hotkeyfile.read('temp/Core Left.SC2Hotkeys')
 hotkeyfile.read(prefix + 'Left.SC2Hotkeys')
 hotkeyfile.write(open('merged.SC2Hotkeys', 'w'))
+
+
