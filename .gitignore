@@ -166,3 +166,5 @@ pip-log.txt
 output.txt
 New Hotkeys.SC2Hotkeys
 *.log
+temp/
+build/
