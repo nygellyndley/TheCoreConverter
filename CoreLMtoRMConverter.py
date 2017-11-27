@@ -4,10 +4,11 @@ from enum import Enum
 class Conversion(Enum):
     LMtoRM = 'LeftToRightMaps'
     RMtoLM = 'LeftToRightMapsInverted'
-    LMtoLS = 'LShiftLeftMaps'
-    LMtoLL = 'LShiftRightMaps'
-    RMtoRS = 'RShiftLeftMaps'
-    RMtoRL = 'RShiftRightMaps'
+    #dropping support for these mappings
+    #LMtoLS = 'LShiftLeftMaps'
+    #LMtoLL = 'LShiftRightMaps'
+    #RMtoRS = 'RShiftLeftMaps'
+    #RMtoRL = 'RShiftRightMaps'
 
 class ConfigParser(configparser.ConfigParser):
     def optionxform(self, opt):
@@ -80,21 +81,15 @@ def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
                 else:
                     outputfile.write(item[0] + "=" + item[1] + "\n")
 
-
-# need a 'merge files' function
-
 if not os.path.isdir("build"):
     os.makedirs("build")
 
 if not os.path.isdir("temp"):
     os.makedirs("temp")
 
-races = ['Z','P','T','R']
-prefix = 'hotkey_sources/TheCore '
-
-# step one is to convert the left medium layouts to right medium layouts
-for race in races:
-    convert_hotkey_file(prefix + race + 'LM.SC2Hotkeys', prefix + race + 'RM.SC2Hotkeys', Conversion.LMtoRM)
+# step one is to convert the left layout to the right layout
+prefix = 'hotkey_sources/Core '
+convert_hotkey_file(prefix + 'Left.SC2Hotkeys', prefix + 'Right.SC2Hotkeys', Conversion.LMtoRM)
 
 # the right medium layouts should be tested in StarCraft and editied if need be
 # once the right medium layouts look good, run the conversion to generate all the other layouts
@@ -103,19 +98,11 @@ for file_name in source_files:
     full_file_name = os.path.join('hotkey_sources/', file_name)
     shutil.copy(full_file_name, 'build/')
 
-prefix = 'build/TheCore '
-for race in races:
-    convert_hotkey_file(prefix + race + 'RM.SC2Hotkeys', prefix + race + 'RL.SC2Hotkeys', Conversion.RMtoRL)
-    convert_hotkey_file(prefix + race + 'RM.SC2Hotkeys', prefix + race + 'RS.SC2Hotkeys', Conversion.RMtoRS)
-    convert_hotkey_file(prefix + race + 'LM.SC2Hotkeys', prefix + race + 'LL.SC2Hotkeys', Conversion.LMtoLL)
-    convert_hotkey_file(prefix + race + 'LM.SC2Hotkeys', prefix + race + 'LS.SC2Hotkeys', Conversion.LMtoLS)
-
-
+prefix = 'build/Core '
+# this converts the right layout back to the left layout and merges it with the original left layout
+convert_hotkey_file(prefix + 'Right.SC2Hotkeys', 'temp/Core Left.SC2Hotkeys', Conversion.RMtoLM)
 hotkeyfile = ConfigParser()
 hotkeyfile.allow_no_value=True
-hotkeyfile.read(prefix + 'ZLM.SC2Hotkeys')
-convert_hotkey_file(prefix + 'ZRM.SC2Hotkeys', 'temp/TheCore ZLM.SC2Hotkeys', Conversion.RMtoLM)
-hotkeyfile.read('temp/TheCore ZLM.SC2Hotkeys')
+hotkeyfile.read('temp/Core Left.SC2Hotkeys')
+hotkeyfile.read(prefix + 'Left.SC2Hotkeys')
 hotkeyfile.write(open('merged.SC2Hotkeys', 'w'))
-
-
