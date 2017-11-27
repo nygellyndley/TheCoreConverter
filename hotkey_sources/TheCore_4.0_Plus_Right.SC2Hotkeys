@@ -1,4 +1,3 @@
-
 [Settings]
 AllowSetConflicts=1
 
@@ -15,6 +14,7 @@ DialogDismiss=RightMouseButton,F10,Escape
 MenuAchievements=F5
 MenuGame=F10,Escape
 MenuMessages=F9
+MenuHelp=
 MenuSocial=F6
 AlertRecall=Control+Shift+Alt+F5
 ArmySelect=7
@@ -88,6 +88,7 @@ SubgroupNext=ForwardMouseButton
 SubgroupPrev=BackMouseButton
 TargetChoose=LeftMouseButton,P,SemiColon,Minus,H,N
 TeamResources=Control+Shift+Minus
+TownCamera=
 WarpIn=Control+Shift+Alt+F10
 CameraSave0=Alt+P
 CameraSave1=Alt+O
@@ -798,6 +799,7 @@ SlivanPuke/Devourer=I
 Snipe/Ghost=SemiColon
 SpawnBanelings/K5Kerrigan=Minus
 SpawnChangeling/Overseer=BracketOpen
+SpawningPool/Drone=SemiColon
 Spectre/Barracks=E
 SpectreHoldFire/Spectre=N
 SpectreNukeArm/GhostAcademy=H
@@ -1059,3 +1061,4 @@ zerglingattackspeed/SpawningPool=J
 zerglingmovementspeed/SpawningPool=P
 zergmeleeweapons1/EvolutionChamber=SemiColon
 zergmissileweapons1/EvolutionChamber=P
+
