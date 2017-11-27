@@ -28,21 +28,25 @@ class Conversion(Enum):
     RMtoLM = 'LeftToRightMapsInverted'
     Layout = 'LayoutConversionType'
 
-
-def remap_single_key_value(key, conversion_type, keymap_section=None):
-    remapped = ""
+def remap_single_key_value(key, conversion_type, keymap_section=None, specific_values=None, command_name=None):
+    #if a list of specific_values is provided, only translate if the key is in it
+    remapped = key
     try:
-        if conversion_type == Conversion.RMtoLM:
-            remapped = keymapper.key_for_value(Conversion.LMtoRM.value, key)
-        elif conversion_type == Conversion.Layout and keymap_section:
-            remapped = layoutmapper.get(keymap_section, key)
-        else:
-            remapped = keymapper.get(conversion_type.value, key)
+        should_convert = True
+        if specific_values: should_convert = keymapper.has_option(specific_values, command_name)
+
+        if should_convert:
+            if conversion_type == Conversion.RMtoLM:
+                remapped = keymapper.key_for_value(Conversion.LMtoRM.value, key)
+            elif conversion_type == Conversion.Layout and keymap_section:
+                remapped = layoutmapper.get(keymap_section, key)
+            else:
+                remapped = keymapper.get(conversion_type.value, key)
     except configparser.NoOptionError:
-        remapped = key
+        pass
     return remapped
 
-def convert_hotkey_values(keystring, conversion_type, keymap_section=None):
+def convert_hotkey_values(keystring, conversion_type, keymap_section=None, specific_values=None, command_name=None):
     remapped = ""
 
     commasplitkeys = keystring.split(",")
@@ -52,7 +56,7 @@ def convert_hotkey_values(keystring, conversion_type, keymap_section=None):
         plussplitkeys = cs.split('+')
         plussplitcount = 1
         for ps in plussplitkeys:
-            remapped += remap_single_key_value(ps, conversion_type, keymap_section)
+            remapped += remap_single_key_value(ps, conversion_type, keymap_section, specific_values, command_name)
             if plussplitcount != len(plussplitkeys):
                 remapped += "+"
             plussplitcount+=1
@@ -78,8 +82,12 @@ def convert_hotkey_file(inputfilename, outputfilename, conversion_type, keymap_s
             outputfile.write("\n[" + section + "]\n")
 
             for item in hotkeyfile.items(section):
-                if section == "Commands" or section == "Hotkeys":
+                if section == "Commands":
                     remapped = convert_hotkey_values(item[1], conversion_type, keymap_section)
+                    if remapped:
+                        outputfile.write(item[0] + "=" + remapped + "\n")
+                elif section == "Hotkeys":
+                    remapped = convert_hotkey_values(item[1], conversion_type, keymap_section, "MenuValues", item[0])
                     if remapped:
                         outputfile.write(item[0] + "=" + remapped + "\n")
                 else:
