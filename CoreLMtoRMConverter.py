@@ -18,8 +18,10 @@ class ConfigParser(configparser.ConfigParser):
         for item in self.items(section):
             if item[1] == value:
                 match = item[0]
-                print('found inverted match: ' + value + ' ' + match)
         return match
+
+    def write(self, file):
+        return super().write(file, space_around_delimiters=False)
 
 keymapper = ConfigParser()
 keymapper.read('KeyMappings.ini')
@@ -63,6 +65,7 @@ def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
     print("converting " + inputfilename + " to " + outputfilename)
 
     hotkeyfile = ConfigParser()
+    hotkeyfile.allow_no_value=True
     hotkeyfile.read(inputfilename)
 
     with open (outputfilename, "w") as outputfile:
@@ -109,6 +112,7 @@ for race in races:
 
 
 hotkeyfile = ConfigParser()
+hotkeyfile.allow_no_value=True
 hotkeyfile.read(prefix + 'ZLM.SC2Hotkeys')
 convert_hotkey_file(prefix + 'ZRM.SC2Hotkeys', 'temp/TheCore ZLM.SC2Hotkeys', Conversion.RMtoLM)
 hotkeyfile.read('temp/TheCore ZLM.SC2Hotkeys')
