@@ -1,4 +1,4 @@
-import configparser, os, shutil
+import configparser, os, shutil, uuid
 from enum import Enum
 
 source_dir = 'hotkey_sources/'
@@ -20,27 +20,28 @@ class ConfigParser(configparser.ConfigParser):
 keymapper = ConfigParser()
 keymapper.read('KeyMappings.ini')
 
+layoutmapper = ConfigParser()
+layoutmapper.read('KeyboardLayouts.ini')
+
 class Conversion(Enum):
     LMtoRM = 'LeftToRightMaps'
     RMtoLM = 'LeftToRightMapsInverted'
-    #dropping support for these mappings
-    #LMtoLS = 'LShiftLeftMaps'
-    #LMtoLL = 'LShiftRightMaps'
-    #RMtoRS = 'RShiftLeftMaps'
-    #RMtoRL = 'RShiftRightMaps'
+    Layout = 'LayoutConversionType'
 
-def remap_single_key_value(key, conversion_type):
+def remap_single_key_value(key, conversion_type, keymap_section=None):
     remapped = ""
     try:
         if conversion_type == Conversion.RMtoLM:
             remapped = keymapper.key_for_value(Conversion.LMtoRM.value, key)
+        elif conversion_type == Conversion.Layout and keymap_section:
+            remapped = layoutmapper.get(keymap_section, key)
         else:
             remapped = keymapper.get(conversion_type.value, key)
     except configparser.NoOptionError:
         remapped = key
     return remapped
 
-def convert_hotkey_values(keystring, conversion_type):
+def convert_hotkey_values(keystring, conversion_type, keymap_section=None):
     remapped = ""
 
     commasplitkeys = keystring.split(",")
@@ -50,7 +51,7 @@ def convert_hotkey_values(keystring, conversion_type):
         plussplitkeys = cs.split('+')
         plussplitcount = 1
         for ps in plussplitkeys:
-            remapped += remap_single_key_value(ps, conversion_type)
+            remapped += remap_single_key_value(ps, conversion_type, keymap_section)
             if plussplitcount != len(plussplitkeys):
                 remapped += "+"
             plussplitcount+=1
@@ -62,7 +63,7 @@ def convert_hotkey_values(keystring, conversion_type):
     return remapped
 
 # probably should use the configparse file write operation, not a custom file output
-def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
+def convert_hotkey_file(inputfilename, outputfilename, conversion_type, keymap_section=None):
     print("converting " + inputfilename + " to " + outputfilename)
 
     hotkeyfile = ConfigParser()
@@ -75,7 +76,7 @@ def convert_hotkey_file(inputfilename, outputfilename, conversion_type):
 
             for item in hotkeyfile.items(section):
                 if section == "Commands" or section == "Hotkeys":
-                    remapped = convert_hotkey_values(item[1], conversion_type)
+                    remapped = convert_hotkey_values(item[1], conversion_type, keymap_section)
                     if remapped:
                         outputfile.write(item[0] + "=" + remapped + "\n")
                 else:
@@ -120,21 +121,24 @@ def unify_left_and_right_layouts():
 # once the right layouts look good, run the conversion again to generate all the other layouts
 
 def generate_localized_layouts():
-    for file_name in os.listdir('temp'):
-        if 'merged' in file_name:
-            new_name = file_name.replace('merged', '')
-            # add conversions for keyboard layouts
-            convert_hotkey_file('temp/' + file_name, 'build/' + new_name, Conversion.RMtoLM)
-
-            # two-step conversion for right layouts
-            convert_hotkey_file('temp/' + file_name, 'build/' + new_name, Conversion.RMtoLM)
     layout_file = ConfigParser()
     layout_file.allow_no_value = True
     layout_file.read('KeyboardLayouts.ini')
-    for section in layout_file.sections():
-        if not os.path.isdir('build/' + section): os.makedirs('build/' + section)
+
+    for file_name in os.listdir('temp'):
+        if 'merged' in file_name:
+            new_name = file_name.replace('merged', '')
+
+            for section in layout_file.sections():
+                if not os.path.isdir('build/' + section): os.makedirs('build/' + section)
+                convert_hotkey_file('temp/' + file_name, 'build/' + section + new_name, Conversion.Layout, section)
+
+                temp_name = str(uuid.uuid4())
+                convert_hotkey_file('temp/' + file_name, 'temp/' + temp_name, Conversion.LMtoRM)
+                right_name = right_filename_from_left(new_name)
+                convert_hotkey_file('temp/' + temp_name, 'build/' + section + right_name, Conversion.Layout, section)
+
 
 generate_right_profiles()
 unify_left_and_right_layouts()
-generate_right_profiles()
 generate_localized_layouts()
