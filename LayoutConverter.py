@@ -28,6 +28,7 @@ class Conversion(Enum):
     RMtoLM = 'LeftToRightMapsInverted'
     Layout = 'LayoutConversionType'
 
+
 def remap_single_key_value(key, conversion_type, keymap_section=None):
     remapped = ""
     try:
@@ -129,15 +130,14 @@ def generate_localized_layouts():
         if 'merged' in file_name:
             new_name = file_name.replace('merged', '')
 
-            for section in layout_file.sections():
-                if not os.path.isdir('build/' + section): os.makedirs('build/' + section)
-                convert_hotkey_file('temp/' + file_name, 'build/' + section + new_name, Conversion.Layout, section)
+            for s in layout_file.sections():
+                if not os.path.isdir('build/' + s): os.makedirs('build/' + s)
+                convert_hotkey_file('temp/' + file_name, 'build/' + s + '/' + new_name, Conversion.Layout, s)
 
                 temp_name = str(uuid.uuid4())
                 convert_hotkey_file('temp/' + file_name, 'temp/' + temp_name, Conversion.LMtoRM)
                 right_name = right_filename_from_left(new_name)
-                convert_hotkey_file('temp/' + temp_name, 'build/' + section + right_name, Conversion.Layout, section)
-
+                convert_hotkey_file('temp/' + temp_name, 'build/' + s + '/' + right_name, Conversion.Layout, s)
 
 generate_right_profiles()
 unify_left_and_right_layouts()
