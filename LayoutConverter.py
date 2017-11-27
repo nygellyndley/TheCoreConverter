@@ -65,7 +65,9 @@ def convert_hotkey_values(keystring, conversion_type, keymap_section=None):
 
 # probably should use the configparse file write operation, not a custom file output
 def convert_hotkey_file(inputfilename, outputfilename, conversion_type, keymap_section=None):
-    print("converting " + inputfilename + " to " + outputfilename)
+    t = conversion_type.value
+    if keymap_section: t = keymap_section
+    print(inputfilename + " converted to " + outputfilename + " conversion type: " + t)
 
     hotkeyfile = ConfigParser()
     hotkeyfile.allow_no_value=True
@@ -96,8 +98,10 @@ def left_filename_from_right(right_name):
         return right_name.replace('right', 'left')
 
 def generate_right_profiles():
+
     for f in ["build", "temp"]:
-        if not os.path.isdir(f): os.makedirs(f)
+        if os.path.isdir(f): shutil.rmtree(f)
+        os.makedirs(f)
 
     for file_name in os.listdir(source_dir):
         right_version = right_filename_from_left(file_name)
@@ -142,3 +146,6 @@ def generate_localized_layouts():
 generate_right_profiles()
 unify_left_and_right_layouts()
 generate_localized_layouts()
+
+shutil.rmtree('temp')
+
