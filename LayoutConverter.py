@@ -112,7 +112,7 @@ def unify_left_and_right_layouts():
             hotkeyfile = ConfigParser()
             hotkeyfile.allow_no_value=True
             hotkeyfile.read('temp/' + left_version)
-            hotkeyfile.read(source_dir + file_name) 
+            hotkeyfile.read(source_dir + left_version) 
             hotkeyfile.write(open('temp/merged.SC2Hotkeys', 'w'))
 
 
