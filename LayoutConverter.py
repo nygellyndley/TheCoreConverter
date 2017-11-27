@@ -3,15 +3,6 @@ from enum import Enum
 
 source_dir = 'hotkey_sources/'
 
-class Conversion(Enum):
-    LMtoRM = 'LeftToRightMaps'
-    RMtoLM = 'LeftToRightMapsInverted'
-    #dropping support for these mappings
-    #LMtoLS = 'LShiftLeftMaps'
-    #LMtoLL = 'LShiftRightMaps'
-    #RMtoRS = 'RShiftLeftMaps'
-    #RMtoRL = 'RShiftRightMaps'
-
 class ConfigParser(configparser.ConfigParser):
     def optionxform(self, opt):
         return opt
@@ -29,6 +20,14 @@ class ConfigParser(configparser.ConfigParser):
 keymapper = ConfigParser()
 keymapper.read('KeyMappings.ini')
 
+class Conversion(Enum):
+    LMtoRM = 'LeftToRightMaps'
+    RMtoLM = 'LeftToRightMapsInverted'
+    #dropping support for these mappings
+    #LMtoLS = 'LShiftLeftMaps'
+    #LMtoLL = 'LShiftRightMaps'
+    #RMtoRS = 'RShiftLeftMaps'
+    #RMtoRL = 'RShiftRightMaps'
 
 def remap_single_key_value(key, conversion_type):
     remapped = ""
@@ -107,22 +106,35 @@ def unify_left_and_right_layouts():
     for file_name in os.listdir(source_dir):
         left_version = left_filename_from_right(file_name)
         if left_version:
-            # this converts the right layout back to the left layout and merges it with the original left layout
+            # this converts the right layout back to the left layout 
+            # and merges it with the original left layout
             convert_hotkey_file(source_dir + file_name, 'temp/' + left_version, Conversion.RMtoLM)
             hotkeyfile = ConfigParser()
             hotkeyfile.allow_no_value=True
             hotkeyfile.read('temp/' + left_version)
             hotkeyfile.read(source_dir + left_version) 
-            hotkeyfile.write(open('temp/merged.SC2Hotkeys', 'w'))
+            hotkeyfile.write(open('temp/merged' + left_version, 'w'))
 
 
 # the right layouts should be tested in StarCraft and editied if need be
 # once the right layouts look good, run the conversion again to generate all the other layouts
 
-#source_files = os.listdir('hotkey_sources')
-#for file_name in source_files:
-#    full_file_name = os.path.join('hotkey_sources/', file_name)
-#    shutil.copy(full_file_name, 'build/')
+def generate_localized_layouts():
+    for file_name in os.listdir('temp'):
+        if 'merged' in file_name:
+            new_name = file_name.replace('merged', '')
+            # add conversions for keyboard layouts
+            convert_hotkey_file('temp/' + file_name, 'build/' + new_name, Conversion.RMtoLM)
+
+            # two-step conversion for right layouts
+            convert_hotkey_file('temp/' + file_name, 'build/' + new_name, Conversion.RMtoLM)
+    layout_file = ConfigParser()
+    layout_file.allow_no_value = True
+    layout_file.read('KeyboardLayouts.ini')
+    for section in layout_file.sections():
+        if not os.path.isdir('build/' + section): os.makedirs('build/' + section)
 
 generate_right_profiles()
 unify_left_and_right_layouts()
+generate_right_profiles()
+generate_localized_layouts()
