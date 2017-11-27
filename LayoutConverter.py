@@ -97,6 +97,15 @@ def left_filename_from_right(right_name):
     elif 'right' in right_name:
         return right_name.replace('right', 'left')
 
+def merge_file_into_file(file1, file2, new_name=None):
+    hotkeyfile = ConfigParser()
+    hotkeyfile.allow_no_value=True
+    hotkeyfile.read(file2)
+    hotkeyfile.read(file1) 
+    f = file2
+    if new_name: f = new_name
+    hotkeyfile.write(open(f, 'w'))
+
 def generate_right_profiles():
 
     for f in ["build", "temp"]:
@@ -106,17 +115,9 @@ def generate_right_profiles():
     for file_name in os.listdir(source_dir):
         right_version = right_filename_from_left(file_name)
         if right_version:
-            convert_hotkey_file(source_dir + file_name, source_dir + right_version, Conversion.LMtoRM)
-
-def merge_file_into_file(file1, file2, new_name=None):
-    convert_hotkey_file(source_dir + file_name, source_dir + right_version, Conversion.LMtoRM)
-    hotkeyfile = ConfigParser()
-    hotkeyfile.allow_no_value=True
-    hotkeyfile.read(file2)
-    hotkeyfile.read(file1) 
-    f = file2
-    if new_name: f = new_name
-    hotkeyfile.write(open(f, 'w'))
+            tempfile = 'temp/' + str(uuid.uuid4())
+            convert_hotkey_file(source_dir + file_name, tempfile, Conversion.LMtoRM)
+            merge_file_into_file(tempfile, source_dir + right_version)
 
 def unify_left_and_right_layouts():
     for file_name in os.listdir(source_dir):
@@ -125,11 +126,6 @@ def unify_left_and_right_layouts():
             # this converts the right layout back to the left layout 
             # and merges it with the original left layout
             convert_hotkey_file(source_dir + file_name, 'temp/' + left_version, Conversion.RMtoLM)
-            #hotkeyfile = ConfigParser()
-            #hotkeyfile.allow_no_value=True
-            #hotkeyfile.read('temp/' + left_version)
-            #hotkeyfile.read(source_dir + left_version) 
-            #hotkeyfile.write(open('temp/merged' + left_version, 'w'))
             merge_file_into_file(source_dir + left_version, 'temp/' + left_version, 'temp/merged' + left_version)
 
 
