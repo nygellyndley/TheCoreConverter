@@ -3,7 +3,7 @@ from enum import Enum
 
 class Conversion(Enum):
     LMtoRM = 'LeftToRightMaps'
-    RMtoLM = 'LeftToRightMaps'
+    RMtoLM = 'LeftToRightMapsInverted'
     LMtoLS = 'LShiftLeftMaps'
     LMtoLL = 'LShiftRightMaps'
     RMtoRS = 'RShiftLeftMaps'
@@ -29,7 +29,7 @@ def remap_single_key_value(key, conversion_type):
     remapped = ""
     try:
         if conversion_type == Conversion.RMtoLM:
-            remapped = keymapper.key_for_value(conversion_type.value, key)
+            remapped = keymapper.key_for_value(Conversion.LMtoRM.value, key)
         else:
             remapped = keymapper.get(conversion_type.value, key)
     except configparser.NoOptionError:
