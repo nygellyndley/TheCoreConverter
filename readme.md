@@ -1,22 +1,27 @@
 ## Setup
-You need to [install Python 3](https://www.python.org/downloads/) to run this script.
+You need to [install Python 3](https://www.python.org/downloads/) to run this script.  
+
 If you try to run the script and see errors like "No module named configparser" or "No module named enum",
 your computer is probably trying to run it with Python 2.
 
 ## Basic Idea
 This program serves two basic functions.
 
-*Thing 1*
-The first is to take a brand new left-side-of-the-keyboard hotkey profile
-and use it to generate a right-side-of-the-keyboard hotkey profile.
-This should probably never be used from this point on, 
-as it's almost always going to be easier to duplicate and then modify existing profiles.
+**Generating a New, Right-Side-of-the-Keyboard Hotkey Profile**  
+If you put a brand new file called, say, `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
+running the script will generate a new hotkey profile called `Sick New Hotkey Profile Right.SC2Hotkeys`. 
+The keyword `Left` or `left` has to be in the filename otherwise it will be ignored.
 
-*Thing 2*
+You should almost never do this though, as it's going to be easier to modify an existing profile.
+
+
+**Using a Pair of Right and Left Hotkey Profiles to Generate a Whole Bunch of Profiles that People Can Use**  
 The second is to take a left-side-of-the-keyboard hotkey profile and a right-side-of-the-keyboard
 hotkey profile and use them to generate a full set of hotkey profiles for different localization (USQwerty, FrenchAzerty, and so on).
 Updating these two starting profiles and generating new distributable, localized profiles is almost always what you'll want to do.
 
+
+## Old, Outdated Readme.txt
 Brief Overview of Important Files:
 
 1. TheCoreSeed.ini - The single file used to generate all layouts of TheCore. It is structured very similarly to a .SC2Hotkeys file,
