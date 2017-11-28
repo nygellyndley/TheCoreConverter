@@ -1,4 +1,3 @@
-
 [Settings]
 AllowSetConflicts=1
 
@@ -66,12 +65,12 @@ ControlGroupRecall6=0
 ControlGroupRecall7=8
 ControlGroupRecall8=U
 ControlGroupRecall9=Comma
-GameTooltipsOn=Control+Shift+Alt+D
+GameTooltipsOn=Control+Shift+Alt+L
 IdleWorker=7
 MinimapColors=Control+Shift+Alt+K
 MinimapPing=Control+Shift+Alt+J
 MinimapTerrain=Control+Shift+Alt+U
-PauseGame=F8,Pause
+PauseGame=F1,Pause
 QuickPing=Control+Alt+RightMouseButton
 QuickSave=Control+Slash
 StatusAll=Control+Shift+Alt+A
@@ -83,22 +82,22 @@ SubgroupPrev=BackMouseButton
 TargetChoose=LeftMouseButton,P,SemiColon,Minus,H,N
 TownCamera=6
 WarpIn=Control+Shift+Alt+F10
-CameraSave0=Alt+P
-CameraSave1=Alt+O
-CameraSave2=Alt+I
-CameraSave3=Alt+J
-CameraSave4=Alt+SemiColon
-CameraSave5=Alt+L
-CameraSave6=Alt+K
-CameraSave7=Alt+9
-CameraView0=Control+Alt+P
-CameraView1=Control+Alt+O
-CameraView2=Control+Alt+I
-CameraView3=Control+J
-CameraView4=Control+Shift+SemiColon
-CameraView5=Control+Alt+L
-CameraView6=Control+Alt+K
-CameraView7=Control+Alt+9
+CameraSave0=Control+Alt+P
+CameraSave1=Control+Alt+O
+CameraSave2=Control+Alt+I
+CameraSave3=Control+J
+CameraSave4=Control+Shift+SemiColon
+CameraSave5=Control+Alt+L
+CameraSave6=Control+Alt+K
+CameraSave7=Control+Alt+9
+CameraView0=Alt+P
+CameraView1=Alt+O
+CameraView2=Alt+I
+CameraView3=Alt+J
+CameraView4=Alt+SemiColon
+CameraView5=Alt+L
+CameraView6=Alt+K
+CameraView7=Alt+9
 
 [Commands]
 250mmStrikeCannons/Thor=J
@@ -1055,3 +1054,4 @@ zerglingattackspeed/SpawningPool=J
 zerglingmovementspeed/SpawningPool=P
 zergmeleeweapons1/EvolutionChamber=SemiColon
 zergmissileweapons1/EvolutionChamber=P
+
