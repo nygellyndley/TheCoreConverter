@@ -1,4 +1,21 @@
-Pre-Requisites: You must have Python 3.5.1+ installed to run this script.
+## Setup
+You need to [install Python 3](https://www.python.org/downloads/) to run this script.
+If you try to run the script and see errors like "No module named configparser" or "No module named enum",
+your computer is probably trying to run it with Python 2.
+
+## Basic Idea
+This program serves two basic functions.
+
+*Thing 1*
+The first is to take a brand new left-side-of-the-keyboard hotkey profile
+and use it to generate a right-side-of-the-keyboard hotkey profile.
+This should probably never be used from this point on, 
+as it's almost always going to be easier to duplicate and then modify existing profiles.
+
+*Thing 2*
+The second is to take a left-side-of-the-keyboard hotkey profile and a right-side-of-the-keyboard
+hotkey profile and use them to generate a full set of hotkey profiles for different localization (USQwerty, FrenchAzerty, and so on).
+Updating these two starting profiles and generating new distributable, localized profiles is almost always what you'll want to do.
 
 Brief Overview of Important Files:
 
