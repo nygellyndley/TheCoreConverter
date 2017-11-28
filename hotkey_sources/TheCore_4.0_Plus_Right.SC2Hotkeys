@@ -1,3 +1,4 @@
+
 [Settings]
 AllowSetConflicts=1
 
@@ -260,6 +261,7 @@ EnableBuildingAttackSplitterling/HotSSplitterlingBig=J
 EngineeringBay/SCV=M
 EnrageQueen/Queen=H
 EvadeObserver/Observer=I
+EvolutionChamber/Drone=M
 EvolveAnabolicSynthesis2/UltraliskCavern=E
 EvolveBurrowCharge/Hatchery=M
 EvolveCentrificalHooks/BanelingNest=P
@@ -791,6 +793,7 @@ SlivanPuke/Devourer=I
 Snipe/Ghost=SemiColon
 SpawnBanelings/K5Kerrigan=Minus
 SpawnChangeling/Overseer=BracketOpen
+SpawningPool/Drone=SemiColon
 Spectre/Barracks=E
 SpectreHoldFire/Spectre=N
 SpectreNukeArm/GhostAcademy=H
@@ -1052,4 +1055,3 @@ zerglingattackspeed/SpawningPool=J
 zerglingmovementspeed/SpawningPool=P
 zergmeleeweapons1/EvolutionChamber=SemiColon
 zergmissileweapons1/EvolutionChamber=P
-
