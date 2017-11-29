@@ -19,19 +19,19 @@ your computer is probably trying to run it with Python 2. Try
 `python3 LayoutConverter.py` or `python3.6 LayoutConverter.py`
 
 ## Basic Overview 
-This program serves two basic functions.
+This program serves three basic functions.
 
-**Generating a New, Right-Side-of-the-Keyboard Hotkey Profile**  
-If you put a brand new file called `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
+1. If you put a brand new file called `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
 running the script will generate a new hotkey profile called `Sick New Hotkey Profile Right.SC2Hotkeys`. 
 The keyword `Left` or `left` has to be in the filename otherwise it will be ignored.
 
-You should almost never do this though, as it's going to be easier to modify an existing profile.
+You should almost never do this though, as it's going to be easier to modify an existing profile (more on this below).
 
-**Using a Pair of Right and Left Hotkey Profiles to Generate a Full Set of Localized, Downloadable Profiles**  
-The second is to take a left-side-of-the-keyboard hotkey profile and a right-side-of-the-keyboard
-hotkey profile and use them to generate a full set of hotkey profiles for different localizations (USQwerty, FrenchAzerty, and so on).
-Making updates to the source profiles and then generating a new set of distributable profiles is almost always what you want to do.
+2. If you make a change to the left profile, the script will translate those changes to the right profile and update it.
+
+3. If there is a left and right pair of hotkey profiles in the `hotkey_sources` folder, 
+the script will use them to generate a full set of hotkey profiles for different localizations (USQwerty, FrenchAzerty, and so on). 
+You can find them in the build folder.
 
 ## How it Works
 1. The script will start by reading hotkey values (like `Zealot=W`, for example) from a left profile (such as `TheCore 4.0 Left.SC2Hotkeys`) found in the `hotkey_sources` folder.
@@ -71,6 +71,20 @@ If that's the case the binding will dissapear from the left profile, and it will
 
 This should be very rare, but it could happen. If you know how to git, just run the script and then `git diff` to see what's changed. 
 If there's a value that dissappeared from the left profile it will be super obvious. Usually a big red line of text.
+
+## Menu Bindings
+There are actually 3 sections in the .SC2Hotkeys files.  
+
+`[Settings]`
+This is a high-level section with things like `AllowSetConflicts`. It does not get translated using the `KeyMappings.ini` file. It just gets copied.
+
+`[Commands]`
+These are the unit commands, like `morph baneling nest` or `attack`.
+Everything in this section gets translated from the left profile to the right profile using the values from `[LeftToRightMaps]` in the `KeyMappings.ini` file.
+
+`[Hotkeys]`
+This section has a stupid name, but it has higher level commands like `open chat`, `show fps`, along with things like `create control group` or `save camera location`.
+Everything in this section is not translated from left to right, except for all the values found in the `[MenuValues]` section of `KeyMappings.ini`.
 
 ## Source Control
 Localizations are all found in the `build` folder, and that folder can be distributed.
