@@ -6,6 +6,8 @@
 5. Grab the `build` folder and give it to people.
 
 ## Setup
+Clone or download the project.  
+
 You need [Python 3](https://www.python.org/downloads/) to run this script.  
 
 From the command line in the project directory:  
@@ -23,8 +25,7 @@ This program serves three basic functions.
 
 1. If you put a brand new file called `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
 running the script will generate a new hotkey profile called `Sick New Hotkey Profile Right.SC2Hotkeys`. 
-The keyword `Left` or `left` has to be in the filename otherwise it will be ignored.
-
+The keyword `Left` or `left` has to be in the filename otherwise it will be ignored. 
 You should almost never do this though, as it's going to be easier to modify an existing profile (more on this below).
 
 2. If you make a change to the left profile, the script will translate those changes to the right profile and update it.
