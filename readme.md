@@ -1,71 +1,77 @@
+## TL;DR
+1. Make updates to a left hotkey profile found in the `hotkey_sources` folder. `The Core 4.0 Left.SC2Hotkeys`, for example.
+2. Run `LayoutConverter.py`
+3. If you think you might have bound a hotkey to it's default value that wasn't previously set to default, open up `The Core 4.0 Right.SC2Hotkeys` and update the binding if it isn't right.
+4. Run the script again.
+5. Grab the `build` folder and give it to people.
+
 ## Setup
-You need to [install Python 3](https://www.python.org/downloads/) to run this script.  
+You need [Python 3](https://www.python.org/downloads/) to run this script.  
 
-If you try to run the script and see errors like "No module named configparser" or "No module named enum",
-your computer is probably trying to run it with Python 2.
+From the command line in the project directory:
+`python LayoutConverter.py`
 
-## Basic Idea
+You can also try double-clicking the `LayoutConverter.py` file. 
+Your PC might be smart enough to run it as a Python 3 script and it might not.
+
+If you run the script and see errors like "No module named configparser" or "No module named enum",
+your computer is probably trying to run it with Python 2. Try
+`python3 LayoutConverter.py` or `python3.6 LayoutConverter.py`
+
+## Basic Overview 
 This program serves two basic functions.
 
 **Generating a New, Right-Side-of-the-Keyboard Hotkey Profile**  
-If you put a brand new file called, say, `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
+If you put a brand new file called `Sick New Hotkey Profile Left.SC2Hotkeys` into the `hotkey_sources` folder, 
 running the script will generate a new hotkey profile called `Sick New Hotkey Profile Right.SC2Hotkeys`. 
 The keyword `Left` or `left` has to be in the filename otherwise it will be ignored.
 
 You should almost never do this though, as it's going to be easier to modify an existing profile.
 
-
-**Using a Pair of Right and Left Hotkey Profiles to Generate a Whole Bunch of Profiles that People Can Use**  
+**Using a Pair of Right and Left Hotkey Profiles to Generate a Full Set of Localized, Downloadable Profiles**  
 The second is to take a left-side-of-the-keyboard hotkey profile and a right-side-of-the-keyboard
-hotkey profile and use them to generate a full set of hotkey profiles for different localization (USQwerty, FrenchAzerty, and so on).
-Updating these two starting profiles and generating new distributable, localized profiles is almost always what you'll want to do.
+hotkey profile and use them to generate a full set of hotkey profiles for different localizations (USQwerty, FrenchAzerty, and so on).
+Making updates to the source profiles and then generating a new set of distributable profiles is almost always what you want to do.
 
+## How it Works
+The script will start by reading hotkey values (like `Zealot=W`, for example) from a left profile (such as `TheCore 4.0 Left.SC2Hotkeys`) found in the `hotkey_sources` folder.
 
-## Old, Outdated Readme.txt
-Brief Overview of Important Files:
+It will then use the mappings from the `KeyMappings.ini` file to translate the hotkey to the right version, i.e. `Zealot=W` becomes `Zealot=P`.
+`Zealot=P` will then be written into `hotkey_sources/TheCore 4.0 Right.SC2Hotkeys`. If the file doesn't exist it will be created.
+If the hotkey is already in the right hotkey profile as `Zealot=O`, for example, the value will be overwritten. 
+If there is a value in the right profile that is not present in the left profile, like `SpawningPool/Drone=SemiColon`, it will not be overwritten.
 
-1. TheCoreSeed.ini - The single file used to generate all layouts of TheCore. It is structured very similarly to a .SC2Hotkeys file,
-with some notable exceptions. Each line can take on 1 of 3 forms. P, T, R, and Z stand for Protoss, Terran, Random, and Zerg, and indicate 
-the key used in the left-handed, medium size layout of TheCore. D stands for the Standard default key used for a command. The line formats are:
-   a. CommandName=P|T|R|Z|D
-   b. CommandName=SharedKey|D (if the keys are the same for each race, don't list them 4 times, just list them once)
-   c. CommandName=CommandNameToCopy (useful for campaign keys, this means the keys will be copied from another command)
+The script will then look for values in both the left and right versions of the hotkey files and use the translations found in `KeyboardLayouts.ini`
+to generate all the localized versions of the profiles. Every section in the `KeyboardLayouts.ini` file represents a different localization,
+so a new localization can be added just by adding a new section to the file. All the localizations will show up as subfolders inside a `build` folder.
 
-2. MapDefinitions.ini - This file stores the mappings that are used to convert the left-handed medium layouts to the other layouts. 
+This means that for the most part (see below), just make changes to the left profile and let the script update the right profile.
+Running the script will update the right profile and generate the distrubutable profiles all at once, 
+so if you make a change to the left hotkey profile you don't need to run the script twice to get all the localized versions.
 
-  [GlobalMaps] are of the form L = R, and are used for mapping the global hotkeys
-     L is the key in the left-handed medium layouts.
-     R is the key in the right-handed medium layouts.
+## Dealing With Default Bindings
+There is one big, extremely annoying thing about the way *.SC2Hotkeys files work, and it's the way default bindings behave.
+If a hotkey is bound to it's default value, like `SpawningPool/Drone=S` (the morph drone into spawning pool command),
+it will not show up in the key profile. This means that the script won't find a keybinding for `SpawningPool/Drone` in the left profile
+and it won't be able to translate it to the right profile, even though it should be converted to `SpawningPool/Drone=SemiColon`
+For the most part this isn't an issue since the nature of The Core is that almost everything is rebound, but there are a few keys that may not be.
 
-  [ShiftLeftMaps] and [ShiftRightMaps] are of the form B = A, and are used for shifting the medium layout one key to the left or right to generate
-  the large and small layouts.
-     B is the key before the shift.
-     A is the key after the shift (the key that is mapped to)
+The way to deal with it is to just open up the right profile and look things over. If a key isn't bound correctly, just fix it in the right profile.
+Once a keybinding has been set in the right profile it will stay there until it gets overwritten by a new binding from the left profile.
+From that point on, unless you're creating a brand new left profile and generating a brand new right profile, the key will keep it's mapping
+that you set in the right profile.
 
-  All of the other maps are of the form LM = LMM,RMM,RM (As of April 2013, LMM and RMM are obsolete)
-     It is a mapping from LM to the other 3 layouts.
-     [P/T/Z/R CGMaps] are the control group maps.
-     [P/T/Z/R AMaps] are the unit ability maps.
-     (Obsolete as of April 2013) [P/T/Z/R A/I/BB/MF/TP Maps] are the maps that are referenced in [MappingTypes]
+The only thing to watch out for after the initial issues with the default bindings have been fixed (which they have been),
+is if you happen to bind a key back to it's default binding after it's been bound to a non-default key. 
+If that's the case the binding will dissapear from the left profile, and it will not be updated in the right profile (the right profile will keep it's previous value).
 
-3. KeyboardLayouts.ini - This file stores mappings for alternative keyboard layouts. TheCoreSeed.ini and MapDefinitions.ini store values designed for QWERTY keyboards.
-The mappings stored in this file are applied to map from the US QWERTY version of a layout to a different keyboard layout. Each keyboard type layout takes on the form:
+This should be very rare, but it could happen. If you know how to git, just run the script and then `git diff` to see what's changed. 
+If there's a value that dissappeared from the left profile it will be super obvious. Usually a big red line of text.
 
-   [KeyboardTypeName]
-   QWERTYKey=KeyboardTypeKey
+## Source Control
+Localizations are all found in the `build` folder, and that folder can be distributed.
+The `build` folder should not be checked into source control as it will clog up the git history, so it won't be there when you clone the repo for the first time.
+Just run the script to generate it.
 
-The generated layouts get put in a separate folder with the name of the KeyboardType (e.g. USDvorak).
-
-4. InGameGUIImport.py - This file will import changes made to PLM,ZLM,TLM, and RLM into TheCoreSeed.ini. The workflow is:
-   a. Copy and paste the *LM.SC2Hotkeys file into your Starcraft 2 Hotkey folder.
-   b. Load up SC2 and edit the layouts in game.
-   c. Copy and paste the edited files back into TheCoreConverter directory, overwriting the existing ones.
-   d. Run python InGameGUIImport.
-   e. Check the log if any hotkeys or commands are missing in the TheCoreSeed.ini and add the ones to the NewDefaults.ini with the default value from sc2 go to d.
-   f. Verify that the changes made to TheCoreSeed.ini are accurate.
-   
-The important thing to note about editing files with the in-game editor is that any overlaps between the edited files and the SC2 Standard hotkey layout will be stripped from the file.
-This is why TheCoreSeed.ini stores the default Standard layout hotkeys, so that it can fill these back in when you run the InGameGUIImport.
-
-5. TheCoreRemapper.py - This is the script that makes the magic happen. Once you have made appropriate changes to TheCoreSeed.ini (either by using the InGameGUIImport method above or
-by editing the text file directly), you can run python TheCoreRemapper.py, and it will generate all layouts of TheCore, and check them for errors.
+The files in `hotkey_sources` *should* be checked into source control since they're considered a source file. 
+If you make a change to a hotkey profile then go ahead and commit it.
