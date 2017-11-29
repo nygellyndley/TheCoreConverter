@@ -34,20 +34,24 @@ hotkey profile and use them to generate a full set of hotkey profiles for differ
 Making updates to the source profiles and then generating a new set of distributable profiles is almost always what you want to do.
 
 ## How it Works
-The script will start by reading hotkey values (like `Zealot=W`, for example) from a left profile (such as `TheCore 4.0 Left.SC2Hotkeys`) found in the `hotkey_sources` folder.
+1. The script will start by reading hotkey values (like `Zealot=W`, for example) from a left profile (such as `TheCore 4.0 Left.SC2Hotkeys`) found in the `hotkey_sources` folder.
 
-It will then use the mappings from the `KeyMappings.ini` file to translate the hotkey to the right version, i.e. `Zealot=W` becomes `Zealot=P`.
+2. It will then use the mappings from the `KeyMappings.ini` file to translate the hotkey to the right version, i.e. `Zealot=W` becomes `Zealot=P`.
 `Zealot=P` will then be written into `hotkey_sources/TheCore 4.0 Right.SC2Hotkeys`. If the file doesn't exist it will be created.
 If the hotkey is already in the right hotkey profile as `Zealot=O`, for example, the value will be overwritten. 
-If there is a value in the right profile that is not present in the left profile, like `SpawningPool/Drone=SemiColon`, it will not be overwritten.
+If there is a value in the right profile that is not present in the left profile, like `SpawningPool/Drone=SemiColon` it will not be overwritten.
 
-The script will then look for values in both the left and right versions of the hotkey files and use the translations found in `KeyboardLayouts.ini`
+3. The script will then look for values in both the left and right versions of the hotkey files and use the translations found in `KeyboardLayouts.ini`
 to generate all the localized versions of the profiles. Every section in the `KeyboardLayouts.ini` file represents a different localization,
 so a new localization can be added just by adding a new section to the file. All the localizations will show up as subfolders inside a `build` folder.
 
-This means that for the most part (see below), just make changes to the left profile and let the script update the right profile.
+For the most part (see below), just make changes to the left profile and let the script update the right profile.
 Running the script will update the right profile and generate the distrubutable profiles all at once, 
 so if you make a change to the left hotkey profile you don't need to run the script twice to get all the localized versions.
+
+If you want to create a new version of The Core (5.0, let's say), copy `The Core 4.0 Left.SC2Hotkeys` and `The Core 4.0 Right.SC2Hotkeys` 
+and rename them to `The Core 5.0 Left.SC2Hotkeys` and `The Core 5.0 Right.SC2Hotkeys`. Don't start from scratch (unless you really want to),
+because the way these two files are paired together helps deal with the default key binding problem.
 
 ## Dealing With Default Bindings
 There is one big, extremely annoying thing about the way *.SC2Hotkeys files work, and it's the way default bindings behave.
