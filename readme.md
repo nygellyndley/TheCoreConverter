@@ -54,10 +54,10 @@ and rename them to `The Core 5.0 Left.SC2Hotkeys` and `The Core 5.0 Right.SC2Hot
 because the way these two files are paired together helps deal with the default key binding problem.
 
 ## Dealing With Default Bindings
-There is one big, extremely annoying thing about the way *.SC2Hotkeys files work, and it's the way default bindings behave.
+There is one, big, extremely annoying thing about the way `*.SC2Hotkeys` files work, and it's the way default bindings behave.
 If a hotkey is bound to it's default value, like `SpawningPool/Drone=S` (the morph drone into spawning pool command),
 it will not show up in the key profile. This means that the script won't find a keybinding for `SpawningPool/Drone` in the left profile
-and it won't be able to translate it to the right profile, even though it should be converted to `SpawningPool/Drone=SemiColon`
+and it won't be able to translate it to the right profile, even though it should be converted to `SpawningPool/Drone=SemiColon`.
 For the most part this isn't an issue since the nature of The Core is that almost everything is rebound, but there are a few keys that may not be.
 
 The way to deal with it is to just open up the right profile and look things over. If a key isn't bound correctly, just fix it in the right profile.
@@ -75,14 +75,14 @@ If there's a value that dissappeared from the left profile it will be super obvi
 ## Menu Bindings
 There are actually 3 sections in the .SC2Hotkeys files.  
 
-`[Settings]`
+`[Settings]`  
 This is a high-level section with things like `AllowSetConflicts`. It does not get translated using the `KeyMappings.ini` file. It just gets copied.
 
-`[Commands]`
+`[Commands]`  
 These are the unit commands, like `morph baneling nest` or `attack`.
 Everything in this section gets translated from the left profile to the right profile using the values from `[LeftToRightMaps]` in the `KeyMappings.ini` file.
 
-`[Hotkeys]`
+`[Hotkeys]`  
 This section has a stupid name, but it has higher level commands like `open chat`, `show fps`, along with things like `create control group` or `save camera location`.
 Everything in this section is not translated from left to right, except for all the values found in the `[MenuValues]` section of `KeyMappings.ini`.
 
