@@ -8,14 +8,14 @@
 ## Setup
 You need [Python 3](https://www.python.org/downloads/) to run this script.  
 
-From the command line in the project directory:
+From the command line in the project directory:  
 `python LayoutConverter.py`
 
 You can also try double-clicking the `LayoutConverter.py` file. 
 Your PC might be smart enough to run it as a Python 3 script and it might not.
 
 If you run the script and see errors like "No module named configparser" or "No module named enum",
-your computer is probably trying to run it with Python 2. Try
+your computer is probably trying to run it with Python 2. Try  
 `python3 LayoutConverter.py` or `python3.6 LayoutConverter.py`
 
 ## Basic Overview 
